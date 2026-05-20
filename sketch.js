@@ -32,6 +32,7 @@ let gameOn, over;
 let speedMs, lastTick;
 let particles;
 let meatballImg;
+let snakeHeadImg;
 
 hiScore = +localStorage.getItem('snakeHS') || 0;
 
@@ -243,39 +244,48 @@ function drawSnake() {
       fill(r, g, b);
     }
 
-    rect(
-      seg.x * CELL + 2,
-      seg.y * CELL + 2,
-      CELL - 4,
-      CELL - 4,
-      3
-    );
-
-    drawingContext.shadowBlur = 0;
-
-    // Eyes
-    if (i === 0) {
-      fill(COL.dark);
-
-      const ex2 = vx === 0 ? 1 : 0;
-      const ey2 = vy === 0 ? 1 : 0;
-
-      const cx = seg.x * CELL + CELL / 2;
-      const cy = seg.y * CELL + CELL / 2;
-
+    if (i === 0 && snakeHeadImg) {
+      push();
+      imageMode(CENTER);
+      translate(seg.x * CELL + CELL / 2, seg.y * CELL + CELL / 2);
+      rotate(atan2(vy, vx));
+      image(snakeHeadImg, 0, 0, CELL - 4, CELL - 4);
+      pop();
+      drawingContext.shadowBlur = 0;
+    } else {
       rect(
-        cx + vx * 4 + ey2 * 3 - 1,
-        cy + vy * 4 + ex2 * 3 - 1,
-        3,
+        seg.x * CELL + 2,
+        seg.y * CELL + 2,
+        CELL - 4,
+        CELL - 4,
         3
       );
 
-      rect(
-        cx + vx * 4 - ey2 * 3 - 1,
-        cy + vy * 4 - ex2 * 3 - 1,
-        3,
-        3
-      );
+      drawingContext.shadowBlur = 0;
+
+      if (i === 0) {
+        fill(COL.dark);
+
+        const ex2 = vx === 0 ? 1 : 0;
+        const ey2 = vy === 0 ? 1 : 0;
+
+        const cx = seg.x * CELL + CELL / 2;
+        const cy = seg.y * CELL + CELL / 2;
+
+        rect(
+          cx + vx * 4 + ey2 * 3 - 1,
+          cy + vy * 4 + ex2 * 3 - 1,
+          3,
+          3
+        );
+
+        rect(
+          cx + vx * 4 - ey2 * 3 - 1,
+          cy + vy * 4 - ex2 * 3 - 1,
+          3,
+          3
+        );
+      }
     }
   });
 }
@@ -409,7 +419,7 @@ function draw() {
 
   if (!gameOn && !over) {
     drawOverlay(
-      'RETRO SNAKE',
+      'HAPPY SPAGHETTI',
       'PRESS ARROW KEY OR WASD',
       null
     );
@@ -450,7 +460,8 @@ function keyPressed() {
 // ── Boot ────────────────────────────────────────────────────
 // ── Setup & Boot ───────────────────────────────────────────
 function setup() {
-  createCanvas(500, 500);
+  const canvasSize = min(windowWidth, windowHeight);
+  createCanvas(canvasSize, canvasSize);
 
   CELL = width / COLS;
 
@@ -461,7 +472,17 @@ function setup() {
   init();
 }
 
+function windowResized() {
+  const canvasSize = min(windowWidth, windowHeight);
+  resizeCanvas(canvasSize, canvasSize);
+
+  CELL = width / COLS;
+  meatball.w = CELL - 2;
+  meatball.h = CELL - 2;
+}
+
 function preload() {
+  snakeHeadImg = loadImage('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA3UlEQVR4AZyOvQ3CMBCFD4tJmIIxSAEtNQWL0CJETU0DW1BkBkCZAxH8WTnriA+hJNKTn99fHMT5nlXV9mVPI+MOvNdToXC/LFsAR6PQRzFAgRCFcHoJgKOpB1d8DdjAcXvTjFhuMwTygDUo7JpGDnWdAEejAGw2DViBwGY/l8d1JZxAOZ5CO2lARXvOFud8tTyLHQm61N3zEXWXZzGSmGndF3h/9LS4IcXAryBhzysG4rMEULBAA1aDh7g6gYwB3eIFQ4fSAEtDi9pJA5RVgP+DzeYBShgA7gEPWO8DAAD//3Vl8hwAAAAGSURBVAMAomlrbaMM5cYAAAAASUVORK5CYIIA');
   // load the meatball image directly from an inline data URL to avoid live preview proxy auth issues
   meatballImg = loadImage('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA8klEQVR4AYySMQrCUBBEvwGr4AnsrexyMzuPYOMpPILXSKU2OYG1WAgqmrcwcfL5QgLDzu7OzP4iVSp8p7r+lFCQplGATOumSSA3aO/zIYAlJnBu2wQkPCxnohGMVoMIYICRoRvpc2iPh10FcbNfQ6A+r+xAvACiZPg/seZoAMcjwM0sQC5mVkIEaCHTvntqNNTSjGW1XbypSWaazWpOGcFnro0XEHK5vUYGv+hcIoVEgIYewkWMAC6NV0Kq4/Xx+0v6LSGgpwkjgJew6+6z0QtcRIjDd84jIH+FC8QVpp7r8AiATAlBR5DM9EMAzZSQXPMFAAD//9NqunoAAAAGSURBVAMA2N+Febx6LYMAAAAASUVORK5CYIIA');
 }
