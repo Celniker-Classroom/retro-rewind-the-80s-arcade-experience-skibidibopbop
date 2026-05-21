@@ -1,18 +1,12 @@
-// ======================
-// Retro Snake
-// ======================
 
-// ── Constants ──────────────────────────────────────────────
 const COLS = 25;
 const HEADER_HEIGHT = 40;
 
 let CELL;
 
-// ── Intro ────────────────────────────────────────────────
 let showIntro = true;
 let introStart;
 
-// ── Palette ────────────────────────────────────────────────
 const COL = {
   board: '#f4dfc3',
   grid: 'rgba(160,98,42,0.10)',
@@ -28,7 +22,6 @@ const COL = {
   overlayBg: 'rgba(0,0,0,0.42)',
 };
 
-// ── State ───────────────────────────────────────────────────
 let snake, vx, vy, prevVx, prevVy;
 let foodX, foodY;
 let meatball;
@@ -43,7 +36,6 @@ let snakeBodyImg;
 
 hiScore = +localStorage.getItem('snakeHS') || 0;
 
-// ── Food object ────────────────────────────────────────────
 meatball = {
   visible: false,
   x: 0,
@@ -52,7 +44,6 @@ meatball = {
   h: 0
 };
 
-// ── Helpers ────────────────────────────────────────────────
 function pad(n) {
   return String(n).padStart(5, '0');
 }
@@ -79,7 +70,6 @@ function spawnFood() {
   meatball.visible = true;
 }
 
-// ── Init ───────────────────────────────────────────────────
 function init() {
   snake = [
     { x: 10, y: 10 },
@@ -107,7 +97,6 @@ function init() {
   spawnFood();
 }
 
-// ── Particles ──────────────────────────────────────────────
 function spawnParticles(px, py) {
   const colors = [COL.sauce, COL.sauceDim, COL.amber, COL.brown];
 
@@ -135,7 +124,6 @@ function updateParticles() {
   });
 }
 
-// ── Game tick ──────────────────────────────────────────────
 function tick() {
   const head = {
     x: snake[0].x + vx,
@@ -195,7 +183,6 @@ function restart() {
   gameOn = true;
 }
 
-// ── Movement ───────────────────────────────────────────────
 function move(dx, dy) {
   if (!gameOn && !over) gameOn = true;
 
@@ -213,7 +200,6 @@ function move(dx, dy) {
   vy = dy;
 }
 
-// ── Grid ───────────────────────────────────────────────────
 function drawGrid() {
   stroke(COL.grid);
   strokeWeight(0.5);
@@ -224,7 +210,6 @@ function drawGrid() {
   }
 }
 
-// ── Snake ──────────────────────────────────────────────────
 function drawSnake() {
   noStroke();
 
@@ -265,7 +250,6 @@ function drawSnake() {
   drawingContext.shadowBlur = 0;
 }
 
-// ── Meatball ───────────────────────────────────────────────
 function drawMeatball() {
   if (!meatball.visible) return;
 
@@ -283,7 +267,6 @@ function drawMeatball() {
   pop();
 }
 
-// ── Particles ──────────────────────────────────────────────
 function drawParticles() {
   noStroke();
 
@@ -296,7 +279,6 @@ function drawParticles() {
   drawingContext.globalAlpha = 1;
 }
 
-// ── HUD ────────────────────────────────────────────────────
 function drawHUD() {
   fill(COL.brown);
   noStroke();
@@ -313,7 +295,6 @@ function drawHUD() {
   text(`BEST ${pad(hiScore)}`, width - 20, HEADER_HEIGHT / 2);
 }
 
-// ── Overlay ────────────────────────────────────────────────
 function drawOverlay(title, sub, scoreStr) {
   fill(COL.overlayBg);
   noStroke();
@@ -343,7 +324,6 @@ function drawOverlay(title, sub, scoreStr) {
   text(sub, width / 2, height / 2 + 80);
 }
 
-// ── Main draw loop ─────────────────────────────────────────
 function draw() {
 
   // ── INTRO SCREEN ──
@@ -397,7 +377,6 @@ function draw() {
   }
 }
 
-// ── Controls ───────────────────────────────────────────────
 function keyPressed() {
   if (keyCode === UP_ARROW || key === 'w') move(0, -1);
   if (keyCode === DOWN_ARROW || key === 's') move(0, 1);
@@ -406,7 +385,6 @@ function keyPressed() {
   if (key === ' ' && over) restart();
 }
 
-// ── Setup ──────────────────────────────────────────────────
 function setup() {
   const canvasSize = min(windowWidth, windowHeight);
 
@@ -433,7 +411,6 @@ function windowResized() {
   meatball.h = CELL - 2;
 }
 
-// ── Images ─────────────────────────────────────────────────
 function preload() {
   snakeHeadImg = loadImage(
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA3UlEQVR4AZyOvQ3CMBCFD4tJmIIxSAEtNQWL0CJETU0DW1BkBkCZAxH8WTnriA+hJNKTn99fHMT5nlXV9mVPI+MOvNdToXC/LFsAR6PQRzFAgRCFcHoJgKOpB1d8DdjAcXvTjFhuMwTygDUo7JpGDnWdAEejAGw2DViBwGY/l8d1JZxAOZ5CO2lARXvOFud8tTyLHQm61N3zEXWXZzGSmGndF3h/9LS4IcXAryBhzysG4rMEULBAA1aDh7g6gYwB3eIFQ4fSAEtDi9pJA5RVgP+DzeYBShgA7gEPWO8DAAD//3Vl8hwAAAAGSURBVAMAomlrbaMM5cYAAAAASUVORK5CYIIA'
