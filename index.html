@@ -10,47 +10,134 @@
 		html,
 		body {
 			height: 100%;
-			background-color: black;
+			background-color: #1a0a00;
 			margin: 0;
 			padding: 0;
 			overflow: hidden;
 			overscroll-behavior: none;
-			display: flex;
-			align-items: center;
-			justify-content: center;
+			font-family: monospace;
 		}
 
 		main {
 			width: 100%;
 			height: 100%;
+			display: flex;
+			gap: 20px;
+			padding: 20px;
+			box-sizing: border-box;
+		}
+
+		.game-container {
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
+			flex-grow: 1;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.game-title {
+			color: #ffb347;
+			font-size: 45px;
+			font-weight: bold;
+			text-align: center;
 		}
 
 		canvas {
 			display: block;
-			max-width: 100%;
-			max-height: 100%;
+			border: 2px solid #e8a857;
+			background-color: #f4dfc3;
 		}
 
-		@media (min-width: 600px) {
-		.header {grid-area: 1 / span 6;}
-		.menu {grid-area: 2 / span 1;}
-		.content {grid-area: 2 / span 4;}
-		.facts {grid-area: 3 / span 6;}
-		.footer {grid-area: 4 / span 6;}
+		.info-box {
+			background-color: #2a1a10;
+			border: 2px solid #e8a857;
+			padding: 20px;
+			border-radius: 5px;
+			overflow-y: auto;
+			width: 500px;
+			height:650px;
+			box-sizing: border-box;
+			margin-top: 110px;
+			margin-right: 50px;
 		}
 
-		@media (min-width: 768px) {
-		.header {grid-area: 1 / span 6;}
-		.menu {grid-area: 2 / span 1;}
-		.content {grid-area: 2 / span 4;}
-		.facts {grid-area: 2 / span 1;}
-		.footer {grid-area: 3 / span 6;}
-}
+		.info-box h2 {
+			color: #ffb347;
+			margin: 0 0 15px 0;
+			border-bottom: 2px solid #e8a857;
+			padding-bottom: 10px;
+		}
+
+		.info-section {
+			margin-bottom: 20px;
+		}
+
+		.info-section h3 {
+			color: #e8a857;
+			margin: 10px 0 8px 0;
+			font-size: 14px;
+		}
+
+		.info-section p {
+			color: #fff2d8;
+			margin: 0;
+			line-height: 1.5;
+			font-size: 12px;
+		}
+
+		.info-section ul {
+			color: #fff2d8;
+			margin: 5px 0;
+			padding-left: 20px;
+			font-size: 12px;
+		}
+
+		.info-section li {
+			margin: 5px 0;
+		}
 	</style>
 </head>
 
 <body>
-	<main></main>
+	<main>
+		<div class="game-container">
+			<div class="game-title">Happy Spaghetti</div>
+			<div id="p5-container"></div>
+		</div>
+		<div class="info-box">
+			<h2>Inspirational Writeup</h2>
+			<div class="info-section">
+				<p>The inspiration for our game was the arcade classic, “Nibbler,” which was released by Rock-Ola in 1982. It featured a simple pixelated snake that ate dots while navigating through a maze and avoiding its own tail. In our game, “Happy Spaghetti,” we used the same game mechanics in which the snake gains a body segment for each item it eats and dies if it hits itself. However, we also added some unique elements, such as making it spaghetti themed: the snake is one long pasta noodle, and each food item is a meatball. Our game also speeds up for every five meatballs that are eaten, which helps to increase the difficulty.</p>
+			</div>
+			<h2>How to Play</h2>
+			<div class="info-section">
+				<h3>Controls:</h3>
+				<ul>
+					<li><strong>Arrow Keys:</strong> Move the snake</li>
+					<li><strong>WASD Keys:</strong> Alternative controls</li>
+					<li><strong>Space:</strong> Restart game after game over</li>
+				</ul>
+			</div>
+			<div class="info-section">
+				<h3>Objective:</h3>
+				<ul>
+					<li>Eat meatballs to grow your spaghetti</li>
+					<li>Avoid hitting the walls</li>
+					<li>Don't collide with your own body</li>
+					<li>Get the highest score!</li>
+				</ul>
+			</div>
+			<div class="info-section">
+				<h3>Tips:</h3>
+				<ul>
+					<li>The game speeds up as you eat more meatballs</li>
+					<li>Your high score is saved locally</li>
+					<li>Plan your moves ahead to avoid dead ends</li>
+				</ul>
+			</div>
+		</div>
+	</main>
 
 	<!-- ONLINE LINKS -->
 	<script type="importmap">

@@ -310,18 +310,18 @@ function drawOverlay(title, sub, scoreStr) {
     fill(COL.textLight);
   }
 
-  textSize(72);
-  text(title, width / 2, height / 2 - 100);
+  textSize(56);
+  text(title, width / 2, height / 2 - 80);
 
   if (scoreStr) {
     fill(COL.textAmber);
-    textSize(48);
-    text(scoreStr, width / 2, height / 2 - 10);
+    textSize(36);
+    text(scoreStr, width / 2, height / 2);
   }
 
   fill('#fff6e6');
-  textSize(32);
-  text(sub, width / 2, height / 2 + 80);
+  textSize(24);
+  text(sub, width / 2, height / 2 + 60);
 }
 
 function draw() {
@@ -334,15 +334,15 @@ function draw() {
     textFont('monospace');
 
     fill(COL.brown);
-    textSize(42);
+    textSize(54);
     text('q5play', width / 2, height / 2 - 30);
 
     fill(COL.textAmber);
-    textSize(18);
+    textSize(24);
     text('HAPPY SPAGHETTI', width / 2, height / 2 + 10);
 
     fill(COL.textLight);
-    textSize(12);
+    textSize(16);
     text('loading...', width / 2, height / 2 + 40);
 
     if (millis() - introStart > 1500) {
@@ -386,9 +386,10 @@ function keyPressed() {
 }
 
 function setup() {
-  const canvasSize = min(windowWidth, windowHeight);
+  const canvasSize = 700;
 
-  createCanvas(canvasSize, canvasSize + HEADER_HEIGHT);
+  const canvas = createCanvas(canvasSize, canvasSize + HEADER_HEIGHT);
+  canvas.parent('p5-container');
 
   CELL = width / COLS;
 
@@ -401,14 +402,7 @@ function setup() {
 }
 
 function windowResized() {
-  const canvasSize = min(windowWidth, windowHeight);
-
-  resizeCanvas(canvasSize, canvasSize + HEADER_HEIGHT);
-
-  CELL = width / COLS;
-
-  meatball.w = CELL - 2;
-  meatball.h = CELL - 2;
+  // Keep canvas size fixed - don't resize on window resize
 }
 
 function preload() {
