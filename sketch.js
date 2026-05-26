@@ -402,7 +402,7 @@ function setup() {
 }
 
 function windowResized() {
-  // Keep canvas size fixed - don't resize on window resize
+  // Keeps canvas size fixed
 }
 
 function preload() {
